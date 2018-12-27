@@ -1,0 +1,24 @@
+[{
+    "description": "[b-api]guest_can_get_system_param_by_group_and_key",
+    "request": {
+        "method": "POST",
+        "uri": "/graphql",
+        "json": {
+            "query": "query SystemParam($paramGroup: String, $paramKey: String) { systemParam(paramGroup: $paramGroup, paramKey: $paramKey) { paramValue } } ",
+            "variables": {
+                "paramGroup": "beauty",
+                "paramKey": "top-searched-keywords"
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "json": {
+            "data": {
+                "systemParam": {
+                    "paramValue": "天河,畅途,美车堂"
+                }
+            }
+        }
+    }
+}]

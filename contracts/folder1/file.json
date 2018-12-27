@@ -1,0 +1,27 @@
+[{
+    "description": "[b-api]should_return_weather_given_local_city_name",
+    "request": {
+        "method": "POST",
+        "uri": "/graphql",
+        "json": {
+            "query": "{getWeatherByCityName(city:\"苏州\"){temperature weather washIndex weatherId}}"
+        }
+    },
+    "response": {
+        "status": 200,
+        "json": {
+            "data": {
+                "getWeatherByCityName": {
+                    "temperature": "20℃~27℃",
+                    "weather": "多云",
+                    "washIndex": "洗车指数:较不宜",
+                    "weatherId": [
+                        "01",
+                        "01",
+                        "01"
+                    ]
+                }
+            }
+        }
+    }
+}]

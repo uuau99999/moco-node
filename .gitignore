@@ -55,7 +55,25 @@ typings/
 .yarn-integrity
 
 # dotenv environment variables file
-.env
+*.env
+
+# parcel-bundler cache (https://parceljs.org/)
+.cache
 
 # next.js build output
 .next
+
+# nuxt.js build output
+.nuxt
+
+# nest.js build output
+dist/
+
+# vuepress build output
+.vuepress/dist
+
+# Serverless directories
+.serverless
+
+# vscode
+.vscode/

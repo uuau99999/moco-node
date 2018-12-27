@@ -1,0 +1,43 @@
+[{
+    "description": "[b-api]should_return_service_cities_when_guest_select_service_cities",
+    "request": {
+        "method": "POST",
+        "uri": "/graphql",
+        "headers": {
+            "Authorization": "Bearer jwt-token-username-chenqian",
+            "jwtSecret": "_SEMS_JWT_SECRET_201805260909999",
+            "Content-Type": "application/json;charset=UTF-8"
+        },
+        "json": {
+            "query": "{serviceCities { popular { code name longitude latitude } coming { code name longitude latitude } } }"
+        }
+    },
+    "response": {
+        "status": 200,
+        "json": {
+            "data": {
+                "serviceCities": {
+                    "popular": [{
+                            "code": "5810",
+                            "name": "广州",
+                            "longitude": "23.129112",
+                            "latitude": "113.264385"
+                        },
+                        {
+                            "code": "5811",
+                            "name": "深圳",
+                            "longitude": "22.547",
+                            "latitude": "114.085947"
+                        }
+                    ],
+                    "coming": [{
+                        "code": "5812",
+                        "name": "杭州",
+                        "longitude": "30.245853",
+                        "latitude": "120.209947"
+                    }]
+                }
+            }
+        }
+    }
+}]

@@ -1,0 +1,136 @@
+[{
+    "description": "[b-beauty]user_can_get_order_detail_which_need_to_sync_from_platform",
+    "request": {
+      "method": "GET",
+      "uri": "/orders/beauty-order-id_4",
+      "headers": {
+        "Authorization": "Bearer jwt-token-username-chenqian",
+        "jwtSecret": "_SEMS_JWT_SECRET_201805260909999",
+        "Content-Type": "application/json;charset=UTF-8"
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": "application/json;charset=UTF-8"
+      },
+      "json": {
+        "id": "beauty-transaction-id_4",
+        "platformOrderId": "beauty-order-id_4",
+        "platformOrderNo": "201811232058430001",
+        "user": {
+          "id": "user-id-chenqian",
+          "name": null
+        },
+        "outlet": {
+          "id": "outlet-001",
+          "name": "白石洲洗车店"
+        },
+        "amount": 45.00,
+        "discountAmount": null,
+        "settleAmount": 45.00,
+        "orderStatus": "COMPLETED",
+        "orderedDate": "2018-11-23 14:20:10",
+        "expiredDate": "2018-11-23 14:20:10",
+        "canceledDate": null,
+        "orderItems": [{
+            "id": "order-item-001",
+            "orderId": "beauty-transaction-id_4",
+            "voucher": {
+              "id": "c08af471ec4d11e8b843001c4291208e",
+              "name": "标准洗车",
+              "description": "盛大标准洗车、适用于本APP所有洗车店",
+              "price": null,
+              "validDays": null,
+              "count": null
+            },
+            "voucherCode": "210ZXCQC11281410451234567",
+            "voucherStatus": "USABLE",
+            "verifiedDate": null,
+            "effectiveDate": "2018-11-28 14:10:45",
+            "expiredDate": "2019-05-27 14:10:45"
+          },
+          {
+            "id": "order-item-002",
+            "orderId": "beauty-transaction-id_4",
+            "voucher": {
+              "id": "c08af471ec4d11e8b843001c4291208e",
+              "name": "标准洗车",
+              "description": "盛大标准洗车、适用于本APP所有洗车店",
+              "price": null,
+              "validDays": null,
+              "count": null
+            },
+            "voucherCode": "210ZXCQC11281410451234567",
+            "voucherStatus": "USABLE",
+            "verifiedDate": null,
+            "effectiveDate": "2018-11-28 14:10:45",
+            "expiredDate": "2019-05-27 14:10:45"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "description": "[b-beauty]user_can_cancel_own_order",
+    "request": {
+      "uri": "/orders/beauty-order-id_4",
+      "method": "PATCH",
+      "headers": {
+        "Authorization": "Bearer jwt-token-username-chenqian",
+        "jwtSecret": "_SEMS_JWT_SECRET_201805260909999",
+        "Content-Type": "application/json;charset=UTF-8"
+      },
+      "json": {
+        "orderStatus": "USER_CANCELED"
+      }
+    },
+    "response": {
+      "status": 204
+    }
+  },
+  {
+    "description": "[b-beauty]user_cannot_cancel_auto_beauty_order_when_its_payment_status_is_pending",
+    "request": {
+      "uri": "/orders/beauty-order-id_4",
+      "method": "PATCH",
+      "headers": {
+        "Authorization": "Bearer jwt-token-username-chenqian",
+        "jwtSecret": "_SEMS_JWT_SECRET_201805260909999",
+        "Content-Type": "application/json;charset=UTF-8"
+      },
+      "json": {
+        "orderStatus": "USER_CANCELED"
+      }
+    },
+    "response": {
+      "status": 409,
+      "json": {
+        "code": "b_00005",
+        "message": "订单状态异常"
+      }
+    }
+  },
+  {
+    "description": "[b-beauty]user_can_not_cancel_own_order_because_order_does_not_exist",
+    "request": {
+      "uri": "/orders/beauty-order-id_4",
+      "method": "PATCH",
+      "headers": {
+        "Authorization": "Bearer jwt-token-username-chenqian",
+        "jwtSecret": "_SEMS_JWT_SECRET_201805260909999",
+        "Content-Type": "application/json;charset=UTF-8"
+      },
+      "json": {
+        "orderStatus": "USER_CANCELED"
+      }
+    },
+    "response": {
+      "status": 409,
+      "json": {
+        "code": "b_00007",
+        "message": "订单不存在，平台订单id: [beauty-order-id_4]"
+      }
+    }
+  }
+]
