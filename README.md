@@ -1,4 +1,4 @@
-# moco-node
+# moco-node [![Build Status](https://api.travis-ci.org/uuau99999/moco-node.svg?branch=master)](https://travis-ci.org/uuau99999/moco-node)
 
 ## Description
 
