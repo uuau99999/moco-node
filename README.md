@@ -20,7 +20,7 @@ A moco server implements with node
     stubServer.stop();
 ```
 
-below is how your contract file looks alike:
+below is how your contract file looks like:
 
 ```
 [{
@@ -111,7 +111,7 @@ and you will get a response like this:
 }
 ```
 
-Note that is you provide a tag that does not exist in tagPortMapping, the request will go to the default port.
+Note that if you provide a tag that does not exist in tagPortMapping, the request will go to the default port.
 
 ### .start() : Promise
 

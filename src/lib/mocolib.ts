@@ -149,6 +149,9 @@ export class MocoServer {
           new jswiremock(this.stubServerPort),
         );
       }
+      if (!tagPortMapping) {
+        return;
+      }
       for (const tag of Object.keys(tagPortMapping)) {
         this.stubServerMap.set(tag, new jswiremock(tagPortMapping[tag]));
       }
