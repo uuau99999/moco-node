@@ -59,15 +59,16 @@ const parseFile = (filePath: string): Promise<Contract[]> => {
         try {
           rawContracts = JSON.parse(data);
           const contracts = [];
-          rawContracts.forEach(rawContract => {
-            contracts.push(
-              new Contract(
-                rawContract.description,
-                rawContract.request,
-                rawContract.response,
-              ),
-            );
-          });
+          rawContracts instanceof Array &&
+            rawContracts.forEach(rawContract => {
+              contracts.push(
+                new Contract(
+                  rawContract.description,
+                  rawContract.request,
+                  rawContract.response,
+                ),
+              );
+            });
           resolve(contracts);
         } catch (error) {
           reject(error);
@@ -81,15 +82,18 @@ const buildContractTreeFromDirectory = async (dirpath: string) => {
   const rootDir = path.join(process.cwd(), dirpath);
   const results: Promise<Contract[]>[] = [];
   await walk(rootDir, (data, err) => {
-    if (err) {
-      console.error(err);
-    }
-    if (data) {
+    if (!err && data) {
       results.push(data);
     }
   });
-  const contractGroupList = await Promise.all(results);
+  let contractGroupList: Contract[][];
   const _contractMap = new Map<string, Contract>();
+  try {
+    contractGroupList = await Promise.all(results);
+  } catch (error) {
+    console.error(error);
+    return _contractMap;
+  }
   contractGroupList.forEach(contractGroup => {
     contractGroup.forEach(contract => {
       _contractMap.set(contract.getDescription(), contract);
