@@ -1,6 +1,6 @@
 {
   "name": "moco-node",
-  "version": "1.0.8",
+  "version": "1.1.0",
   "description": "moco stub server for node",
   "main": "dist/index.js",
   "repository": "https://github.com/uuau99999/moco-node.git",
@@ -12,7 +12,7 @@
     "format": "prettier --write \"src/**/*.ts\"",
     "prebuild": "rimraf dist && tsc",
     "lint": "tslint -p tsconfig.json -c tslint.json",
-    "test": "jest --detectOpenHandles",
+    "test": "jest",
     "precommit": "lint-staged"
   },
   "dependencies": {

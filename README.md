@@ -58,7 +58,7 @@ Note that the stub is search based on your contract description, and the uri tha
 
 ### new MocoServer('contract_dir', port | options) : MocoServer
 
-    Initialize a MocoServer instance. Contract dir is a path relative to your project root directroy. The second argument can either be a port number or an options object. See exmaple below:
+Initialize a MocoServer instance. Contract dir is a path relative to your project root directroy. The second argument can either be a port number or an options object. See exmaple below:
 
 ```
 const server = new MocoServer('contracts', {
