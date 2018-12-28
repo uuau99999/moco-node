@@ -1,0 +1,41 @@
+[{
+        "description": "[b-support]should_return_weather_given_local_city_name",
+        "request": {
+            "method": "GET",
+            "uri": "/weather/苏州"
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": "application/json;charset=UTF-8"
+            },
+            "json": {
+                "temperature": "20℃~27℃",
+                "weather": "多云",
+                "washIndex": "较不宜",
+                "weatherId": [
+                    "01",
+                    "01",
+                    "01"
+                ]
+            }
+        }
+    },
+    {
+        "description": "[b-support]should_return_error_given_invalid_city_name",
+        "request": {
+            "method": "GET",
+            "uri": "/weather/cityname"
+        },
+        "response": {
+            "status": 422,
+            "headers": {
+                "Content-Type": "application/json;charset=UTF-8"
+            },
+            "json": {
+                "code": "s_00005",
+                "message": "查询失败"
+            }
+        }
+    }
+]

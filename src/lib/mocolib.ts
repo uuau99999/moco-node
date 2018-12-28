@@ -139,7 +139,7 @@ export class MocoServer {
     if (method === 'GET') {
       stubFor(
         this.stubServer,
-        get(urlEqualTo(uri), queries, headers).willReturn(
+        get(urlEqualTo(encodeURI(uri)), queries, headers).willReturn(
           a_response()
             .withStatus(contract.getResponse().status)
             .withHeader(contract.getResponse().headers)
@@ -149,7 +149,7 @@ export class MocoServer {
     } else if (method === 'POST') {
       stubFor(
         this.stubServer,
-        post(urlEqualTo(uri), json, headers).willReturn(
+        post(urlEqualTo(encodeURI(uri)), json, headers).willReturn(
           a_response()
             .withStatus(contract.getResponse().status)
             .withHeader(contract.getResponse().headers)

@@ -1,5 +1,1 @@
-import { MocoServer } from './lib/mocolib';
-
-export default {
-  MocoServer,
-};
+export * from './lib/mocolib';
