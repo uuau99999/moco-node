@@ -98,6 +98,13 @@ const buildContractTreeFromDirectory = async (dirpath: string) => {
   return _contractMap;
 };
 
+export interface MocoServerOptions {
+  defaultPort?: number;
+  tagPortMapping?: {
+    [key: string]: number;
+  };
+}
+
 export class MocoServer {
   private contractMap: Map<string, Contract> | null;
 
@@ -105,11 +112,23 @@ export class MocoServer {
 
   private stubServerPort: number;
 
-  private stubServer: jswiremock;
+  private stubServerOptions: MocoServerOptions;
 
-  constructor(contractPath: string, port: number) {
+  private stubServerMap: Map<string, jswiremock> = new Map();
+
+  private readonly DEFAULT_TAG: string = 'DEFAULT';
+
+  constructor(contractPath: string, options: number | MocoServerOptions) {
     this.contractPath = contractPath;
-    this.stubServerPort = port;
+    if (typeof options === 'number') {
+      this.stubServerPort = options;
+    } else {
+      this.stubServerPort = options.defaultPort;
+      this.stubServerOptions = options;
+      if (!this.stubServerPort && !this.stubServerOptions) {
+        throw new Error('Either port or tagPortMapping must be provided');
+      }
+    }
   }
 
   public buildContractMap = async () => {
@@ -122,11 +141,29 @@ export class MocoServer {
 
   public start = async () => {
     await this.buildContractMap();
-    this.stubServer = new jswiremock(this.stubServerPort);
+    if (this.stubServerOptions) {
+      const { tagPortMapping } = this.stubServerOptions;
+      if (this.stubServerPort) {
+        this.stubServerMap.set(
+          this.DEFAULT_TAG,
+          new jswiremock(this.stubServerPort),
+        );
+      }
+      for (const tag of Object.keys(tagPortMapping)) {
+        this.stubServerMap.set(tag, new jswiremock(tagPortMapping[tag]));
+      }
+    } else {
+      this.stubServerMap.set(
+        this.DEFAULT_TAG,
+        new jswiremock(this.stubServerPort),
+      );
+    }
   };
 
   public stop = () => {
-    this.stubServer.stopJSWireMock();
+    this.stubServerMap.forEach((server: jswiremock) => {
+      server.stopJSWireMock();
+    });
   };
 
   public getContratMap = () => {
@@ -135,10 +172,16 @@ export class MocoServer {
 
   public givenStub = (description: string) => {
     const contract = this.contractMap.get(description);
+    if (!contract) {
+      throw new Error(`Can not find stub by description: ${description}`);
+    }
     const { method, queries, uri, headers, json } = contract.getRequest();
+    const stubServer =
+      this.stubServerMap.get(contract.getTag()) ||
+      this.stubServerMap.get(this.DEFAULT_TAG);
     if (method === 'GET') {
       stubFor(
-        this.stubServer,
+        stubServer,
         get(urlEqualTo(encodeURI(uri)), queries, headers).willReturn(
           a_response()
             .withStatus(contract.getResponse().status)
@@ -148,7 +191,7 @@ export class MocoServer {
       );
     } else if (method === 'POST') {
       stubFor(
-        this.stubServer,
+        stubServer,
         post(urlEqualTo(encodeURI(uri)), json, headers).willReturn(
           a_response()
             .withStatus(contract.getResponse().status)

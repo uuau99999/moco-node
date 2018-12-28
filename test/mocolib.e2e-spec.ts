@@ -1,12 +1,18 @@
 import { MocoServer } from '../src/lib/mocolib';
 import * as _request from 'supertest';
 
-const request = _request('http://localhost:5001');
+const request = _request('http://localhost');
 
 describe('can givenStub successfully', () => {
   let stubServer: MocoServer | null = null;
   beforeAll(async () => {
-    stubServer = await new MocoServer('contracts', 5001);
+    stubServer = await new MocoServer('contracts', {
+      defaultPort: 5001,
+      tagPortMapping: {
+        'b-api': 5002,
+        'b-support': 5003,
+      },
+    });
     await stubServer.start();
   });
 
@@ -18,7 +24,7 @@ describe('can givenStub successfully', () => {
     stubServer.givenStub('[b-api]should_return_weather_given_local_city_name');
 
     request
-      .post('/graphql')
+      .post(':5002/graphql')
       .send({
         query:
           '{getWeatherByCityName(city:"苏州"){temperature weather washIndex weatherId}}',
@@ -49,7 +55,7 @@ describe('can givenStub successfully', () => {
     );
 
     request
-      .post('/graphql')
+      .post(':5002/graphql')
       .set({
         Authorization: 'Bearer jwt-token-username-chenqian',
         jwtSecret: '_SEMS_JWT_SECRET_201805260909999',
@@ -102,7 +108,7 @@ describe('can givenStub successfully', () => {
     );
 
     request
-      .get('/orders/beauty-order-id_4')
+      .get(':5001/orders/beauty-order-id_4')
       .set({
         Authorization: 'Bearer jwt-token-username-chenqian',
         jwtSecret: '_SEMS_JWT_SECRET_201805260909999',
@@ -180,7 +186,7 @@ describe('can givenStub successfully', () => {
     stubServer.givenStub(
       '[b-support]should_return_weather_given_local_city_name',
     );
-    request.get(encodeURI('/weather/苏州')).end((err, response) => {
+    request.get(encodeURI(':5003/weather/苏州')).end((err, response) => {
       if (err) {
         done(err);
       }

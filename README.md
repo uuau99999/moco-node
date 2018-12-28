@@ -56,6 +56,63 @@ Note that the stub is search based on your contract description, and the uri tha
 
 ## Api
 
+### new MocoServer('contract_dir', port | options) : MocoServer
+
+    Initialize a MocoServer instance. Contract dir is a path relative to your project root directroy. The second argument can either be a port number or an options object. See exmaple below:
+
+```
+const server = new MocoServer('contracts', {
+    defaultPort: 5001,
+    tagPortMapping: {
+        tag1: 5002,
+        tag2: 5003,
+        'b-api': 5004,
+        ...
+    }
+});
+```
+
+If you pass an options object to constructor, MocoServer will start a server for every tag you defined in tagPortMapping. So you can define your contract description like this: '\[your_tag\]your_description'. Then if you pass this to your givenStub function, the stub will only match this contract request only in server port mapping to your tag. For example, given the MocoServer and contract file shown above, you can fire a request like this:
+
+```
+server.givenStub('[b-api]should_return_weather_given_local_city_name');
+
+...
+
+fetch('http://localhost:5004/graphql' {
+    method: 'POST',
+    body: JSON.stringify({
+        query:
+            "{getWeatherByCityName(city:\"苏州\")
+            {temperature weather washIndex weatherId}}"
+    })
+})
+```
+
+and you will get a response like this:
+
+```
+"response": {
+    "status": 200,
+    "json": {
+        "data": {
+            "getWeatherByCityName": {
+                "temperature": "20℃~27℃",
+                "weather": "多云",
+                "washIndex": "洗车指数:较不宜",
+                "weatherId": [
+                    "01",
+                    "01",
+                    "01"
+                ]
+            }
+        }
+    }
+}
+```
+
+Note that is you provide a tag that does not exist in tagPortMapping, the request will go to the default port.
+
 ### .start() : Promise
 
     start a stub server.
