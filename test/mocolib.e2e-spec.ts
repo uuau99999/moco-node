@@ -199,4 +199,24 @@ describe('can givenStub successfully', () => {
       done();
     });
   });
+
+  it('can givenStub with GET request url with Chinese character and query params', async done => {
+    stubServer.givenStub(
+      '[b-support]should_return_weather_given_local_city_name_with_params',
+    );
+    request
+      .get(encodeURI(':5003/weather/苏州?time=123456'))
+      .end((err, response) => {
+        if (err) {
+          done(err);
+        }
+        expect(response.body).toEqual({
+          temperature: '20℃~27℃',
+          washIndex: '较不宜',
+          weather: '多云',
+          weatherId: ['01', '01', '01'],
+        });
+        done();
+      });
+  });
 });

@@ -102,6 +102,35 @@ const buildContractTreeFromDirectory = async (dirpath: string) => {
   return _contractMap;
 };
 
+const componseQueryString = (uri: string, params: object) => {
+  if (!params) {
+    return uri;
+  }
+  const esc = encodeURIComponent;
+  return (
+    uri +
+    '?' +
+    Object.keys(params)
+      .map(k => esc(k) + '=' + esc(params[k]))
+      .join('&')
+  );
+};
+
+const preprocessQueryParams = (params: object) => {
+  if (!params) {
+    return {};
+  }
+  const returnParams = {};
+  for (const key of Object.keys(params)) {
+    if (typeof params[key] !== 'string') {
+      returnParams[key] = params[key] + '';
+    } else {
+      returnParams[key] = params[key];
+    }
+  }
+  return returnParams;
+};
+
 export interface MocoServerOptions {
   defaultPort?: number;
   tagPortMapping?: {
@@ -189,7 +218,11 @@ export class MocoServer {
     if (method === 'GET') {
       stubFor(
         stubServer,
-        get(urlEqualTo(encodeURI(uri)), queries, headers).willReturn(
+        get(
+          urlEqualTo(encodeURI(componseQueryString(uri, queries))),
+          preprocessQueryParams(queries),
+          headers,
+        ).willReturn(
           a_response()
             .withStatus(contract.getResponse().status)
             .withHeader(contract.getResponse().headers)

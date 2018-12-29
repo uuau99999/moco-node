@@ -2641,9 +2641,9 @@ node-int64@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/node-int64/-/node-int64-0.4.0.tgz#87a9065cdb355d3182d8f94ce11188b825c68a3b"
 
-node-jswiremock@^0.0.3:
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/node-jswiremock/-/node-jswiremock-0.0.3.tgz#d83a6deaf26f51999f165a09716d01490c5f3c98"
+node-jswiremock@^0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/node-jswiremock/-/node-jswiremock-0.0.4.tgz#05bad0684c4e4cf982f87aad47b339ef386a1ffb"
   dependencies:
     body-parser "1.17.1"
     express "~4.15.2"

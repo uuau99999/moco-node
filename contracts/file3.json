@@ -37,5 +37,31 @@
                 "message": "查询失败"
             }
         }
+    },
+    {
+        "description": "[b-support]should_return_weather_given_local_city_name_with_params",
+        "request": {
+            "method": "GET",
+            "uri": "/weather/苏州",
+            "queries": {
+                "time": 123456
+            }
+        },
+        "response": {
+            "status": 200,
+            "headers": {
+                "Content-Type": "application/json;charset=UTF-8"
+            },
+            "json": {
+                "temperature": "20℃~27℃",
+                "weather": "多云",
+                "washIndex": "较不宜",
+                "weatherId": [
+                    "01",
+                    "01",
+                    "01"
+                ]
+            }
+        }
     }
 ]
