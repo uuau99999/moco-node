@@ -1,24 +1,50 @@
 [{
-    "description": "[b-api]guest_can_get_system_param_by_group_and_key",
-    "request": {
-        "method": "POST",
-        "uri": "/graphql",
-        "json": {
-            "query": "query SystemParam($paramGroup: String, $paramKey: String) { systemParam(paramGroup: $paramGroup, paramKey: $paramKey) { paramValue } } ",
-            "variables": {
-                "paramGroup": "beauty",
-                "paramKey": "top-searched-keywords"
+        "description": "[b-api]guest_can_get_system_param_by_group_and_key",
+        "request": {
+            "method": "POST",
+            "uri": "/graphql",
+            "json": {
+                "query": "query SystemParam($paramGroup: String, $paramKey: String) { systemParam(paramGroup: $paramGroup, paramKey: $paramKey) { paramValue } } ",
+                "variables": {
+                    "paramGroup": "beauty",
+                    "paramKey": "top-searched-keywords"
+                }
+            }
+        },
+        "response": {
+            "status": 200,
+            "json": {
+                "data": {
+                    "systemParam": {
+                        "paramValue": "天河,畅途,美车堂"
+                    }
+                }
             }
         }
     },
-    "response": {
-        "status": 200,
-        "json": {
-            "data": {
-                "systemParam": {
-                    "paramValue": "天河,畅途,美车堂"
+    {
+        "description": "[b-api]guest_can_post_params_with_nested_object_and_array",
+        "request": {
+            "method": "POST",
+            "uri": "/test/nested",
+            "json": {
+                "testObject": {
+                    "a": 1,
+                    "b": 1
+                },
+                "testArray": [{
+                    "a": 1,
+                    "b": 2
+                }]
+            }
+        },
+        "response": {
+            "status": 200,
+            "json": {
+                "data": {
+                    "value": "测试deepequal"
                 }
             }
         }
     }
-}]
+]

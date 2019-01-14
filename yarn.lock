@@ -785,6 +785,10 @@ dedent@^0.7.0:
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/dedent/-/dedent-0.7.0.tgz#2495ddbaf6eb874abb0e1be9df22d2e5a544326c"
 
+deep-equal@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/deep-equal/-/deep-equal-1.0.1.tgz#f5d260292b660e084eff4cdbc9f08ad3247448b5"
+
 deep-extend@^0.6.0:
   version "0.6.0"
   resolved "https://registry.yarnpkg.com/deep-extend/-/deep-extend-0.6.0.tgz#c4fa7c95404a17a9c3e8ca7e1537312b736330ac"
@@ -2641,11 +2645,12 @@ node-int64@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/node-int64/-/node-int64-0.4.0.tgz#87a9065cdb355d3182d8f94ce11188b825c68a3b"
 
-node-jswiremock@^0.0.4:
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/node-jswiremock/-/node-jswiremock-0.0.4.tgz#05bad0684c4e4cf982f87aad47b339ef386a1ffb"
+node-jswiremock@^0.0.5:
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/node-jswiremock/-/node-jswiremock-0.0.5.tgz#6ffc6b336478a7e66955136dc0c5549aa4686c60"
   dependencies:
     body-parser "1.17.1"
+    deep-equal "^1.0.1"
     express "~4.15.2"
     lodash "^4.17.11"
 

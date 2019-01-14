@@ -102,6 +102,39 @@ describe('can givenStub successfully', () => {
       });
   });
 
+  it('can givenStub with POST request and headers', async done => {
+    stubServer.givenStub(
+      '[b-api]guest_can_post_params_with_nested_object_and_array',
+    );
+
+    request
+      .post(':5002/test/nested')
+      .send({
+        testObject: {
+          a: 1,
+          b: 1,
+        },
+        testArray: [
+          {
+            a: 1,
+            b: 2,
+          },
+        ],
+      })
+      .expect(200)
+      .end((err, response) => {
+        if (err) {
+          done(err);
+        }
+        expect(response.body).toEqual({
+          data: {
+            value: '测试deepequal',
+          },
+        });
+        done();
+      });
+  });
+
   it('can givenStub with GET request', async done => {
     stubServer.givenStub(
       '[b-beauty]user_can_get_order_detail_which_need_to_sync_from_platform',
