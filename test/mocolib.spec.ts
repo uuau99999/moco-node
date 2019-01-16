@@ -5,7 +5,7 @@ describe('Contract tree can be build successfully', () => {
     const stubServer = new MocoServer('contracts', 5001);
     await stubServer.buildContractMap();
     const data = stubServer.getContratMap();
-    expect(data.size).toBe(11);
+    expect(data.size).toBe(15);
     expect(
       data
         .get('[b-api]should_return_weather_given_local_city_name')

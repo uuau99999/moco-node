@@ -252,4 +252,116 @@ describe('can givenStub successfully', () => {
         done();
       });
   });
+
+  it('can given stub to put request', async done => {
+    stubServer.givenStub('[b-api]test_put_method');
+    request
+      .put(':5002/graphql')
+      .send({
+        query:
+          '{getWeatherByCityName(city:"苏州"){temperature weather washIndex weatherId}}',
+      })
+      .set('Accept', 'application/json')
+      .expect(200)
+      .end((err, response) => {
+        if (err) {
+          done(err);
+        }
+        expect(response.body).toEqual({
+          data: {
+            getWeatherByCityName: {
+              temperature: '20℃~27℃',
+              weather: '多云',
+              washIndex: '洗车指数:较不宜',
+              weatherId: ['01', '01', '01'],
+            },
+          },
+        });
+        done();
+      });
+  })
+
+  it('can given stub to patch request', async done => {
+    stubServer.givenStub('[b-api]test_patch_method');
+    request
+      .patch(':5002/graphql')
+      .send({
+        query:
+          '{getWeatherByCityName(city:"苏州"){temperature weather washIndex weatherId}}',
+      })
+      .set('Accept', 'application/json')
+      .expect(200)
+      .end((err, response) => {
+        if (err) {
+          done(err);
+        }
+        expect(response.body).toEqual({
+          data: {
+            getWeatherByCityName: {
+              temperature: '20℃~27℃',
+              weather: '多云',
+              washIndex: '洗车指数:较不宜',
+              weatherId: ['01', '01', '01'],
+            },
+          },
+        });
+        done();
+      });
+  })
+
+  it('can given stub to delete request', async done => {
+    stubServer.givenStub('[b-api]test_delete_method');
+    request
+      .delete(':5002/graphql')
+      .send({
+        query:
+          '{getWeatherByCityName(city:"苏州"){temperature weather washIndex weatherId}}',
+      })
+      .set('Accept', 'application/json')
+      .expect(200)
+      .end((err, response) => {
+        if (err) {
+          done(err);
+        }
+        expect(response.body).toEqual({
+          data: {
+            getWeatherByCityName: {
+              temperature: '20℃~27℃',
+              weather: '多云',
+              washIndex: '洗车指数:较不宜',
+              weatherId: ['01', '01', '01'],
+            },
+          },
+        });
+        done();
+      });
+  })
+
+  it('can given stub to options request', async done => {
+    stubServer.givenStub('[b-api]test_options_method');
+    request
+      .options(':5002/graphql')
+      .send({
+        query:
+          '{getWeatherByCityName(city:"苏州"){temperature weather washIndex weatherId}}',
+      })
+      .set('Accept', 'application/json')
+      .expect(200)
+      .end((err, response) => {
+        if (err) {
+          done(err);
+        }
+        expect(response.body).toEqual({
+          data: {
+            getWeatherByCityName: {
+              temperature: '20℃~27℃',
+              weather: '多云',
+              washIndex: '洗车指数:较不宜',
+              weatherId: ['01', '01', '01'],
+            },
+          },
+        });
+        done();
+      });
+  })
 });

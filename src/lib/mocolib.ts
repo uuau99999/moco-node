@@ -4,11 +4,23 @@ import { Contract } from './contract';
 import {
   jswiremock,
   stubFor,
-  post,
   get,
+  post,
+  put,
+  delete as _delete,
+  patch,
+  options,
   urlEqualTo,
   a_response,
 } from 'node-jswiremock';
+
+const methods = {
+  _POST: post,
+  _PUT: put,
+  _PATCH: patch,
+  _DELETE: _delete,
+  _OPTIONS: options,
+}
 
 const walk = (
   dir: string,
@@ -151,13 +163,13 @@ export class MocoServer {
 
   private readonly DEFAULT_TAG: string = 'DEFAULT';
 
-  constructor(contractPath: string, options: number | MocoServerOptions) {
+  constructor(contractPath: string, _options: number | MocoServerOptions) {
     this.contractPath = contractPath;
-    if (typeof options === 'number') {
-      this.stubServerPort = options;
+    if (typeof _options === 'number') {
+      this.stubServerPort = _options;
     } else {
-      this.stubServerPort = options.defaultPort;
-      this.stubServerOptions = options;
+      this.stubServerPort = _options.defaultPort;
+      this.stubServerOptions = _options;
       if (!this.stubServerPort && !this.stubServerOptions) {
         throw new Error('Either port or tagPortMapping must be provided');
       }
@@ -229,10 +241,10 @@ export class MocoServer {
             .withBody(contract.getResponse().json),
         ),
       );
-    } else if (method === 'POST') {
+    } else {
       stubFor(
         stubServer,
-        post(urlEqualTo(encodeURI(uri)), json, headers).willReturn(
+        methods[`_${method.toUpperCase()}`](urlEqualTo(encodeURI(uri)), json, headers).willReturn(
           a_response()
             .withStatus(contract.getResponse().status)
             .withHeader(contract.getResponse().headers)

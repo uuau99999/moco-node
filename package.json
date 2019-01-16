@@ -1,6 +1,6 @@
 {
   "name": "moco-node",
-  "version": "1.1.4",
+  "version": "1.1.6",
   "description": "moco stub server for node",
   "main": "dist/index.js",
   "repository": "https://github.com/uuau99999/moco-node.git",
@@ -16,7 +16,7 @@
     "precommit": "lint-staged"
   },
   "dependencies": {
-    "node-jswiremock": "^0.0.5"
+    "node-jswiremock": "^0.0.6"
   },
   "devDependencies": {
     "@types/jest": "^23.3.10",
