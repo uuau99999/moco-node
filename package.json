@@ -1,6 +1,6 @@
 {
   "name": "moco-node",
-  "version": "1.1.7",
+  "version": "1.1.8",
   "description": "moco stub server for node",
   "main": "dist/index.js",
   "repository": "https://github.com/uuau99999/moco-node.git",
