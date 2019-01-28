@@ -2645,9 +2645,9 @@ node-int64@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/node-int64/-/node-int64-0.4.0.tgz#87a9065cdb355d3182d8f94ce11188b825c68a3b"
 
-node-jswiremock@^0.0.9:
-  version "0.0.9"
-  resolved "https://registry.npmjs.org/node-jswiremock/-/node-jswiremock-0.0.9.tgz#be4283763680d85a29d29e7122fbd918872c4c82"
+node-jswiremock@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/node-jswiremock/-/node-jswiremock-0.1.0.tgz#5113ee02cc570a327c9a552246f469b8ce1139e4"
   dependencies:
     body-parser "1.17.1"
     deep-equal "^1.0.1"
