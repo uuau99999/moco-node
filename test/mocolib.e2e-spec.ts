@@ -279,7 +279,7 @@ describe('can givenStub successfully', () => {
         });
         done();
       });
-  })
+  });
 
   it('can given stub to patch request', async done => {
     stubServer.givenStub('[b-api]test_patch_method');
@@ -307,7 +307,7 @@ describe('can givenStub successfully', () => {
         });
         done();
       });
-  })
+  });
 
   it('can given stub to delete request', async done => {
     stubServer.givenStub('[b-api]test_delete_method');
@@ -335,7 +335,7 @@ describe('can givenStub successfully', () => {
         });
         done();
       });
-  })
+  });
 
   it('can given stub to options request', async done => {
     stubServer.givenStub('[b-api]test_options_method');
@@ -363,5 +363,25 @@ describe('can givenStub successfully', () => {
         });
         done();
       });
-  })
+  });
+
+  it('can clear stubs', async done => {
+    stubServer.suppressConsole();
+    stubServer.clearStubs('b-api');
+    request
+      .options(':5002/graphql')
+      .send({
+        query:
+          '{getWeatherByCityName(city:"苏州"){temperature weather washIndex weatherId}}',
+      })
+      .set('Accept', 'application/json')
+      .expect(404)
+      .end((err, response) => {
+        if (err) {
+          done(err);
+        }
+        expect(response.body).toEqual({});
+        done();
+      });
+  });
 });

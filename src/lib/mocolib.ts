@@ -4,6 +4,8 @@ import { Contract } from './contract';
 import {
   jswiremock,
   stubFor,
+  clearStubs,
+  suppressConsole,
   get,
   post,
   put,
@@ -20,7 +22,7 @@ const methods = {
   _PATCH: patch,
   _DELETE: _delete,
   _OPTIONS: options,
-}
+};
 
 const walk = (
   dir: string,
@@ -218,6 +220,16 @@ export class MocoServer {
     return this.contractMap;
   };
 
+  public suppressConsole = () => {
+    return suppressConsole();
+  };
+
+  public clearStubs = (tag: string) => {
+    const stubServer =
+      this.stubServerMap.get(tag) || this.stubServerMap.get(this.DEFAULT_TAG);
+    clearStubs(stubServer);
+  };
+
   public givenStub = (description: string) => {
     const contract = this.contractMap.get(description);
     if (!contract) {
@@ -244,7 +256,11 @@ export class MocoServer {
     } else {
       stubFor(
         stubServer,
-        methods[`_${method.toUpperCase()}`](urlEqualTo(encodeURI(uri)), json, headers).willReturn(
+        methods[`_${method.toUpperCase()}`](
+          urlEqualTo(encodeURI(uri)),
+          json,
+          headers,
+        ).willReturn(
           a_response()
             .withStatus(contract.getResponse().status)
             .withHeader(contract.getResponse().headers)
