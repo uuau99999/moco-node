@@ -136,3 +136,7 @@ Note that if you provide a tag that does not exist in tagPortMapping, the reques
 ### .buildContractMap() : Promise<Map<string, Contract>>
 
     build contract map.
+
+### .clearStubs() : void
+
+    clear all stubs
